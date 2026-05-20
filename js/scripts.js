@@ -16,4 +16,3 @@
 // @prepros-append vendor/imagesloaded.pkgd.min.js
 // @prepros-append vendor/ScrollMagic.min.js
 // @prepros-append vendor/scrollmagic.animation.gsap.min.js
-//python -m http.server 8085
