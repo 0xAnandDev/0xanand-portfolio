@@ -5,8 +5,9 @@ Welcome to the official repository for my professional blockchain developer port
 ---
 
 ## 🚀 Live Demo & Deployment
+* **⚡ Live Demo**: [https://0xanandportfolio.vercel.app/](https://0xanandportfolio.vercel.app/) 🔗
 * **GitHub Repository**: [0xAnandDev/0xanand-portfolio](https://github.com/0xAnandDev/0xanand-portfolio)
-* **Hosting Platform**: Built to deploy seamlessly to **Vercel**, **Netlify**, or standard PHP/Apache hosting.
+* **Hosting Platform**: Deployed on **Vercel** with support for Netlify or standard PHP/Apache hosting.
 
 ---
 
