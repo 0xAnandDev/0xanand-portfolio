@@ -2258,3 +2258,88 @@ span.error {
 .gsap-reveal-img .reveal-wrap .reveal-content .portfolio-item-content h3 {
   margin-bottom: 10px;
 }
+
+/* Custom Portfolio Detail Styles */
+.portfolio-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 2px solid #D63447;
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.tech-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.tech-tag-item {
+  background: #212121;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tech-tag-item:hover {
+  border-color: #D63447;
+  background: #1a1a1a;
+}
+
+.portfolio-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 25px;
+}
+
+.portfolio-list-item {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.portfolio-list-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #D63447;
+  font-size: 20px;
+  line-height: 1;
+  top: 0;
+}
+
+.challenge-box {
+  background: #1a1a1a;
+  border-left: 3px solid #D63447;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.challenge-title {
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.challenge-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin-bottom: 0;
+}

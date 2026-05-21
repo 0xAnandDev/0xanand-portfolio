@@ -259,6 +259,7 @@ var owlSingleSlider = function () {
 	    margin: 0,
 	    smartSpeed: 1500,
 	    autoplay: true,
+	    autoplayTimeout: 2000,
 	    autoplayHoverPause: true,
 	    dots: true,
 	    nav: true,

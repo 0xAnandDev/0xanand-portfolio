@@ -74,7 +74,7 @@
       </nav>
       <!-- END nav -->
 
-      <div class="cover-v1 gradient-bottom-black jarallax" style="background-image: url('images/aageslend_finance.png');">
+      <div class="cover-v1 gradient-bottom-black jarallax" style="background-image: url('images/AagesLend/aageslend_finance.png');">
         <div class="container">
           <div class="row align-items-center">
 
@@ -106,7 +106,31 @@
               <div class="col-12 mb-4">
                 <div class="owl-carousel single-slider">
                   <figure class="mb-4">
-                    <img src="images/aageslend_finance.png" alt="AagesLend Finance" class="img-fluid rounded">
+                    <img src="images/AagesLend/aageslend_finance.png" alt="AagesLend Finance - Cover" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/Dashboard.png" alt="AagesLend Finance - Dashboard" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/ProtocolInsights.png" alt="AagesLend Finance - Protocol Insights" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/Approve+DepositingFlow.png" alt="AagesLend Finance - Approve and Deposit Flow" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/MintingFlow.png" alt="AagesLend Finance - Minting Flow" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/MintSuccess.png" alt="AagesLend Finance - Mint Success" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/BorrowPage.png" alt="AagesLend Finance - Borrow Page" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/BorrowPageConstraint.png" alt="AagesLend Finance - Borrow Constraints" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/AagesLend/MyLoansDashboard.png" alt="AagesLend Finance - My Loans Dashboard" class="img-fluid rounded">
                   </figure>
                 </div>
               </div>
@@ -138,12 +162,63 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Refactored Content Sections -->
               <div class="col-md-6 pr-md-5">
+                <h3 class="portfolio-section-title">Project Overview</h3>
                 <p><strong>AagesLend</strong> is a production-grade decentralized lending protocol engineered to enable secure, non-custodial capital markets on EVM-compatible chains. The protocol implements over-collateralized lending vaults, dynamic interest rate curves, robust role-based access control (RBAC), and a bulletproof health factor liquidation engine to safeguard depositors' liquidity.</p>
+                
+                <h3 class="portfolio-section-title">Tech Stack</h3>
+                <ul class="tech-tag-list">
+                  <li class="tech-tag-item">Solidity</li>
+                  <li class="tech-tag-item">Hardhat</li>
+                  <li class="tech-tag-item">OpenZeppelin</li>
+                  <li class="tech-tag-item">React</li>
+                  <li class="tech-tag-item">Ethers.js</li>
+                  <li class="tech-tag-item">MetaMask</li>
+                  <li class="tech-tag-item">EVM</li>
+                </ul>
               </div>
+
               <div class="col-md-6 pl-md-5">
-                <p>During development, strict attention was paid to gas optimization strategies, successfully implementing assembly-level storage packing, efficient loops, and memory caching to achieve sub-100k gas execution costs on core lending and repayment transactions. The resulting system demonstrates DeFi architecture at its peak performance and safety standards.</p>
+                <h3 class="portfolio-section-title">Key Features</h3>
+                <ul class="portfolio-list">
+                  <li class="portfolio-list-item"><strong>Collateral Management:</strong> Direct on-chain management of token collateral with safe asset-to-debt ratios.</li>
+                  <li class="portfolio-list-item"><strong>Borrowing Mechanics:</strong> Dynamic borrow capacity calculations based on real-time price feeds.</li>
+                  <li class="portfolio-list-item"><strong>DeFi Dashboard:</strong> Complete React-based client dashboard displaying protocol insights.</li>
+                  <li class="portfolio-list-item"><strong>Wallet Integration:</strong> Secure Ethers.js implementation with MetaMask connection and network checks.</li>
+                </ul>
               </div>
+
+              <div class="col-12 mt-4">
+                <div class="row">
+                  <div class="col-md-6 pr-md-5">
+                    <h3 class="portfolio-section-title">Security & Permission Features</h3>
+                    <ul class="portfolio-list">
+                      <li class="portfolio-list-item"><strong>Role-Based Access Control:</strong> Uses OpenZeppelin AccessControl to enforce Admin/Lender/Borrower separation.</li>
+                      <li class="portfolio-list-item"><strong>Least-Privilege Roles:</strong> Restricts operational functions to prevent unauthorized administration.</li>
+                      <li class="portfolio-list-item"><strong>Health Factor Calculations:</strong> Continuously monitors loan-to-value status on-chain.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="col-md-6 pl-md-5">
+                    <h3 class="portfolio-section-title">Challenges & Solutions</h3>
+                    
+                    <div class="challenge-box">
+                      <div class="challenge-title">Liquidation Calculations & Bad Debt Mitigation</div>
+                      <p class="challenge-text"><strong>Challenge:</strong> Executing real-time liquidation computations on-chain is vulnerable to latency. If the liquidation formula runs slowly when LTV falls under 1.0, bad debt accumulation can occur, causing the protocol to crash under high volatility.
+                      <br><strong>Solution:</strong> Engineered a highly optimized math engine using fixed-point decimals. The liquidation engine relies on immediate, gas-optimized checks that trigger third-party bot execution pathways at exact LTV boundaries, halting bad debt cascades instantly.</p>
+                    </div>
+
+                    <div class="challenge-box">
+                      <div class="challenge-title">Sub-100k Gas Execution Constraints</div>
+                      <p class="challenge-text"><strong>Challenge:</strong> Multi-tiered borrow/repay transactions exceeded standard gas thresholds, creating a poor user experience.
+                      <br><strong>Solution:</strong> Achieved sub-100k gas execution via storage packing (wrapping uint96 vars into a single 256-bit slot), inline Yul assembly for 15% bytecode size reduction, and batching transactions to cut overhead by 40%.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>

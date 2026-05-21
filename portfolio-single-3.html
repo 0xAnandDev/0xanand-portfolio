@@ -74,7 +74,7 @@
       </nav>
       <!-- END nav -->
 
-      <div class="cover-v1 gradient-bottom-black jarallax" style="background-image: url('images/decentropay.png');">
+      <div class="cover-v1 gradient-bottom-black jarallax" style="background-image: url('images/Decentropay/decentropay.png');">
         <div class="container">
           <div class="row align-items-center">
 
@@ -106,7 +106,19 @@
               <div class="col-12 mb-4">
                 <div class="owl-carousel single-slider">
                   <figure class="mb-4">
-                    <img src="images/decentropay.png" alt="DecentroPay L2 Payments" class="img-fluid rounded">
+                    <img src="images/Decentropay/decentropay.png" alt="DecentroPay - Cover Layout" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Decentropay/metamask-confirmation.png" alt="DecentroPay - MetaMask Confirmation Screen" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Decentropay/balance-update.png" alt="DecentroPay - Real-time Balance Changes" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Decentropay/transaction-history.png" alt="DecentroPay - Transaction Ledger History" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Decentropay/polygonscan-proof.png" alt="DecentroPay - On-chain Polygonscan Proof" class="img-fluid rounded">
                   </figure>
                 </div>
               </div>
@@ -138,12 +150,63 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Refactored Content Sections -->
               <div class="col-md-6 pr-md-5">
+                <h3 class="portfolio-section-title">Project Overview</h3>
                 <p><strong>DecentroPay</strong> is a high-performance decentralized peer-to-peer payment application built specifically to leverage Polygon's Layer 2 scaling infrastructure. Integrated seamlessly with MetaMask, the application enables instantaneous cryptocurrency transfers, digital invoices, and multi-token processing with near-zero latency.</p>
+                
+                <h3 class="portfolio-section-title">Tech Stack</h3>
+                <ul class="tech-tag-list">
+                  <li class="tech-tag-item">Solidity</li>
+                  <li class="tech-tag-item">React</li>
+                  <li class="tech-tag-item">Web3.js</li>
+                  <li class="tech-tag-item">Polygon</li>
+                  <li class="tech-tag-item">MetaMask</li>
+                  <li class="tech-tag-item">L2 Scaling</li>
+                  <li class="tech-tag-item">Vercel</li>
+                </ul>
               </div>
+
               <div class="col-md-6 pl-md-5">
-                <p>By shifting transaction execution to Polygon's high-speed consensus framework, DecentroPay achieves a massive 90% gas fee reduction compared to Ethereum mainnet. Utilizing custom Web3.js connectors and light-weight Solidity micro-payments architecture, the platform sets a new benchmark for accessible, everyday Web3 merchant and consumer payment channels.</p>
+                <h3 class="portfolio-section-title">Key Features</h3>
+                <ul class="portfolio-list">
+                  <li class="portfolio-list-item"><strong>L2 Fast Transfers:</strong> Immediate crypto transfers on Polygon Amoy with transaction validation.</li>
+                  <li class="portfolio-list-item"><strong>DApp Wallet Connection:</strong> Smooth MetaMask integration using Web3.js for authentication.</li>
+                  <li class="portfolio-list-item"><strong>Secure Ledger:</strong> Instant ledger listing transaction history with direct linkouts to Polygonscan block proofs.</li>
+                  <li class="portfolio-list-item"><strong>Gas Efficiency:</strong> Reduced processing costs by 90% versus mainnet Ethereum operations.</li>
+                </ul>
               </div>
+
+              <div class="col-12 mt-4">
+                <div class="row">
+                  <div class="col-md-6 pr-md-5">
+                    <h3 class="portfolio-section-title">Security & Transaction Verification</h3>
+                    <ul class="portfolio-list">
+                      <li class="portfolio-list-item"><strong>Cryptographic Signatures:</strong> Secures and validates sender parameters for payment authorizations.</li>
+                      <li class="portfolio-list-item"><strong>Multi-Network Safeguards:</strong> Prevents operations if connected to incorrect chain IDs.</li>
+                      <li class="portfolio-list-item"><strong>Non-Reentrant Withdrawals:</strong> Implements secure transfer checks before state adjustments.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="col-md-6 pl-md-5">
+                    <h3 class="portfolio-section-title">Challenges & Solutions</h3>
+                    
+                    <div class="challenge-box">
+                      <div class="challenge-title">Polygon Gas Fluctuations & Transaction Reverts</div>
+                      <p class="challenge-text"><strong>Challenge:</strong> Occasional Polygon network congestion caused gas fee spike failures, resulting in hanging states or transactions reverting midway without releasing locked user funds.
+                      <br><strong>Solution:</strong> Formulated strict Web3 fallback mechanisms with dynamic gas estimation. Added client-side monitoring that recalculates gas fees on-the-fly and implements atomic transaction pathways that automatically revert states safely according to smart contract protocol invariants.</p>
+                    </div>
+
+                    <div class="challenge-box">
+                      <div class="challenge-title">Incentive Distribution & Auto-Debiting for Miners</div>
+                      <p class="challenge-text"><strong>Challenge:</strong> Requiring users to maintain native POL/MATIC tokens to pay miners/relayers for basic incentive withdrawals created a major friction point.
+                      <br><strong>Solution:</strong> Implemented a meta-transaction relayer standard where the contract supports delegated signatures. The contract automatically debits transaction fees from the incentive payload itself to pay miners directly, removing the need for pre-funded native wallet balances.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>

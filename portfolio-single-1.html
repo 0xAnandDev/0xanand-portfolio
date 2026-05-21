@@ -74,7 +74,7 @@
       </nav>
       <!-- END nav -->
 
-      <div class="cover-v1 gradient-bottom-black jarallax" style="background-image: url('images/solvigil_scanner.png');">
+      <div class="cover-v1 gradient-bottom-black jarallax" style="background-image: url('images/Solvigil/solvigil_scanner.png');">
         <div class="container">
           <div class="row align-items-center">
 
@@ -106,7 +106,16 @@
               <div class="col-12 mb-4">
                 <div class="owl-carousel single-slider">
                   <figure class="mb-4">
-                    <img src="images/solvigil_scanner.png" alt="Solvigil Security Scanner" class="img-fluid rounded">
+                    <img src="images/Solvigil/solvigil_scanner.png" alt="Solvigil Security Scanner - Dashboard" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Solvigil/solvigil-scanner2.png" alt="Solvigil Security Scanner - Vulnerability Analysis" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Solvigil/solvigil-scanner3.png" alt="Solvigil Security Scanner - AST Node Inspector" class="img-fluid rounded">
+                  </figure>
+                  <figure class="mb-4">
+                    <img src="images/Solvigil/solvigil-scanner4.png" alt="Solvigil Security Scanner - Audit Summary Report" class="img-fluid rounded">
                   </figure>
                 </div>
               </div>
@@ -138,12 +147,65 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Refactored Content Sections -->
               <div class="col-md-6 pr-md-5">
-                <p><strong>Solvigil</strong> is an automated smart contract vulnerability detection platform designed to protect Web3 decentralized applications before deployment. By utilizing rigorous Abstract Syntax Tree (AST) parsing techniques, Solvigil walks through Solidity code blocks to isolate reentrancy bugs, access control vulnerabilities, unchecked return values, and potential Denial of Service (DoS) attack vectors.</p>
+                <h3 class="portfolio-section-title">Project Overview</h3>
+                <p><strong>Solvigil</strong> is an automated smart contract static analysis tool engineered to detect vulnerabilities inside Solidity smart contracts. By parsing Solidity code into an Abstract Syntax Tree (AST), the scanner walks tree nodes to identify structural and logical security bugs. This production-grade auditing tool provides visual remediation advice to help developers fix contract flaws prior to mainnet deployment.</p>
+                
+                <h3 class="portfolio-section-title">Tech Stack</h3>
+                <ul class="tech-tag-list">
+                  <li class="tech-tag-item">Node.js</li>
+                  <li class="tech-tag-item">Express</li>
+                  <li class="tech-tag-item">React</li>
+                  <li class="tech-tag-item">Tailwind CSS</li>
+                  <li class="tech-tag-item">AST Analysis</li>
+                  <li class="tech-tag-item">Solidity</li>
+                  <li class="tech-tag-item">Vercel</li>
+                  <li class="tech-tag-item">Render</li>
+                </ul>
               </div>
+
               <div class="col-md-6 pl-md-5">
-                <p>The system compiles smart contracts in real-time, extracts logical node representations, and applies precise pattern matching to highlight critical security anomalies. Featuring a modern, high-performance UI constructed with React and a robust Node.js backend scanner, Solvigil empowers blockchain developers to implement early pre-audits and deploy secure Web3 solutions confidently.</p>
+                <h3 class="portfolio-section-title">Key Features</h3>
+                <ul class="portfolio-list">
+                  <li class="portfolio-list-item"><strong>Static AST Parsing:</strong> Translates Solidity source code into structured JSON AST nodes for rule evaluation.</li>
+                  <li class="portfolio-list-item"><strong>Severity Risk Mapping:</strong> Dynamically classifies vulnerabilities based on CVSS scale parameters.</li>
+                  <li class="portfolio-list-item"><strong>Interactive UI Dashboard:</strong> Fully responsive interface that highlights faulty code blocks.</li>
+                  <li class="portfolio-list-item"><strong>Secure Multi-File APIs:</strong> High-performance express endpoint with strict size and CORS configuration controls.</li>
+                </ul>
               </div>
+
+              <div class="col-12 mt-4">
+                <div class="row">
+                  <div class="col-md-6 pr-md-5">
+                    <h3 class="portfolio-section-title">Security Auditing Capabilities</h3>
+                    <ul class="portfolio-list">
+                      <li class="portfolio-list-item"><strong>Reentrancy Scans:</strong> Discovers variables modified after low-level external transfers.</li>
+                      <li class="portfolio-list-item"><strong>Access Control Audits:</strong> Highlights critical state modifying functions lacking modifiers.</li>
+                      <li class="portfolio-list-item"><strong>Unchecked Calls:</strong> Traces low-level return values (e.g. `call`, `send`) without check validations.</li>
+                      <li class="portfolio-list-item"><strong>DoS Vectors:</strong> Signals loops bounded by dynamic arrays vulnerable to Block Gas limits.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="col-md-6 pl-md-5">
+                    <h3 class="portfolio-section-title">Challenges & Solutions</h3>
+                    
+                    <div class="challenge-box">
+                      <div class="challenge-title">Optimizing AST Search & Reducing False Flags</div>
+                      <p class="challenge-text"><strong>Challenge:</strong> Traversing the entire Abstract Syntax Tree for large contracts was highly resource-intensive and produced high false positives by flagging innocent loops or helper functions.
+                      <br><strong>Solution:</strong> Developed pre-traversal filter algorithms that scan imports, check annotations, and isolate suspicious syntax patterns first, eliminating unnecessary node traversals and improving overall scan speeds.</p>
+                    </div>
+
+                    <div class="challenge-box">
+                      <div class="challenge-title">Dynamic PDF Report Generation in Serverless Environments</div>
+                      <p class="challenge-text"><strong>Challenge:</strong> Translating nested JSON findings into readable PDF audit reports without triggering memory limit timeouts on serverless Render APIs.
+                      <br><strong>Solution:</strong> Designed a stream-based PDF layout engine that processes and builds tables, security severity badges, and code snippets block-by-block, rendering a lightweight and clean downloadable audit log.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>
