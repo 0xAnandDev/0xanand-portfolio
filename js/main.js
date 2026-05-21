@@ -562,46 +562,95 @@ var contactForm = function() {
 				var $submit = $('.submitting'),
 					waitText = 'Submitting...';
 
-				$.ajax({   	
-			      type: "POST",
-			      url: "php/send-email.php",
-			      data: $(form).serialize(),
+				// Detect if Web3Forms key is set and modified from the placeholder
+				var accessKeyInput = $(form).find('input[name="access_key"]');
+				var accessKey = accessKeyInput.val();
+				var isWeb3Forms = accessKey && accessKey !== "YOUR_WEB3FORMS_ACCESS_KEY_HERE" && accessKey.trim() !== "";
 
-			      beforeSend: function() { 
-			      	$submit.css('display', 'block').text(waitText);
-			      },
-			      success: function(msg) {
-	               if (msg.trim() == 'OK') {
-	               	$('#form-message-warning').hide();
-			            setTimeout(function(){
-	               		$('#contactForm').fadeOut();
-	               	}, 1000);
-			            setTimeout(function(){
-			               $('#form-message-success').fadeIn();   
-	               	}, 1400);
-		               
-		            } else if (msg.indexOf('<?php') !== -1 || msg.indexOf('$message') !== -1) {
-		               // Smart Fallback for static servers (like npx serve, Vercel, GitHub Pages)
-		               console.info("Web3 Portfolio: Static server detected. Form data simulated successfully:", $(form).serializeArray());
-		               $('#form-message-warning').hide();
-			            setTimeout(function(){
-	               		$('#contactForm').fadeOut();
-	               	}, 1000);
-			            setTimeout(function(){
-			               $('#form-message-success').html("Your message was sent successfully! (Simulated locally)").fadeIn();   
-	               	}, 1400);
-		            } else {
-		               $('#form-message-warning').html(msg);
-			            $('#form-message-warning').fadeIn();
-			            $submit.css('display', 'none');
-		            }
-			      },
-			      error: function() {
-			      	$('#form-message-warning').html("Something went wrong. Please try again.");
-			         $('#form-message-warning').fadeIn();
-			         $submit.css('display', 'none');
-			      }
-		      });    		
+				if (isWeb3Forms) {
+					// Prepare JSON for Web3Forms API
+					var formData = new FormData(form);
+					var object = {};
+					formData.forEach(function(value, key){
+						object[key] = value;
+					});
+					var json = JSON.stringify(object);
+
+					$.ajax({
+						type: "POST",
+						url: "https://api.web3forms.com/submit",
+						headers: {
+							'Content-Type': 'application/json',
+							'Accept': 'application/json'
+						},
+						data: json,
+						beforeSend: function() {
+							$submit.css('display', 'block').text(waitText);
+						},
+						success: function(response) {
+							if (response.success) {
+								$('#form-message-warning').hide();
+								setTimeout(function(){
+									$('#contactForm').fadeOut();
+								}, 1000);
+								setTimeout(function(){
+									$('#form-message-success').html("Your message was sent successfully!").fadeIn();
+								}, 1400);
+							} else {
+								$('#form-message-warning').html(response.message || "Something went wrong.");
+								$('#form-message-warning').fadeIn();
+								$submit.css('display', 'none');
+							}
+						},
+						error: function() {
+							$('#form-message-warning').html("Something went wrong. Please try again.");
+							$('#form-message-warning').fadeIn();
+							$submit.css('display', 'none');
+						}
+					});
+				} else {
+					// Fallback to PHP / Local Simulation
+					$.ajax({   	
+				      type: "POST",
+				      url: "php/send-email.php",
+				      data: $(form).serialize(),
+
+				      beforeSend: function() { 
+				      	$submit.css('display', 'block').text(waitText);
+				      },
+				      success: function(msg) {
+		               if (msg.trim() == 'OK') {
+		               	$('#form-message-warning').hide();
+				            setTimeout(function(){
+		               		$('#contactForm').fadeOut();
+		               	}, 1000);
+				            setTimeout(function(){
+				               $('#form-message-success').fadeIn();   
+		               	}, 1400);
+			               
+			            } else if (msg.indexOf('<?php') !== -1 || msg.indexOf('$message') !== -1) {
+			               // Smart Fallback for static servers (like npx serve, Vercel, GitHub Pages)
+			               console.info("Web3 Portfolio: Static server detected. Form data simulated successfully:", $(form).serializeArray());
+			               $('#form-message-warning').hide();
+				            setTimeout(function(){
+		               		$('#contactForm').fadeOut();
+		               	}, 1000);
+				            setTimeout(function(){
+				               $('#form-message-success').html("Your message was sent successfully! (Simulated locally)").fadeIn();   
+		               	}, 1400);
+			            } else {
+			               $('#form-message-warning').html(msg);
+				            $('#form-message-warning').fadeIn();
+				            $submit.css('display', 'none');
+			            }
+				      },
+				      error: function() {
+				      	$('#form-message-warning').html("Something went wrong. Please try again.");
+				         $('#form-message-warning').fadeIn();
+				         $submit.css('display', 'none');
+				      }
+			      });
+				}
 	  		}
 			
 		} );
