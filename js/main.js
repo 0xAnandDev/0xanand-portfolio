@@ -225,26 +225,29 @@ var owlCarouselPlugin = function() {
 
 		$('.logo-slider').owlCarousel({
 			center: false,
-	    loop: true,
-	    stagePadding: 0,
-	    margin: 0,
-	    smartSpeed: 1000,
-	    autoplay: true,
-	    autoplayHoverPause: true,
-	    dots: false,
-	    nav: false,
-	    responsive:{
-		    400:{
-		      items: 2
-		    },
-		    768:{
-		    	items: 3
-		    },
-		    1000:{
-		    	items: 5
-		    }
-	    }
-	   });
+			loop: true,
+			stagePadding: 0,
+			margin: 50,
+			autoplay: true,
+			autoplayTimeout: 2000,
+			autoplaySpeed: 2000,
+			smartSpeed: 2000,
+			slideTransition: 'linear',
+			autoplayHoverPause: false,
+			dots: false,
+			nav: false,
+			responsive:{
+				400:{
+					items: 2
+				},
+				768:{
+					items: 3
+				},
+				1000:{
+					items: 5
+				}
+			}
+		});
 	}
 
 };
@@ -676,4 +679,52 @@ var animateReveal = function() {
 	}
 
 }
+
+window.toggleResumeDownload = function(btn) {
+	var container = btn.parentElement;
+	var splitBtn = container.querySelector('.btn-download-split');
+	if (!splitBtn) return;
+
+	btn.style.setProperty('display', 'none', 'important');
+	splitBtn.style.setProperty('display', 'flex', 'important');
+
+	var revertTimeout;
+
+	function startRevertTimer() {
+		clearTimeout(revertTimeout);
+		revertTimeout = setTimeout(function() {
+			revertToOriginal();
+		}, 5000);
+	}
+
+	function clearRevertTimer() {
+		clearTimeout(revertTimeout);
+	}
+
+	function revertToOriginal() {
+		splitBtn.style.setProperty('display', 'none', 'important');
+		btn.style.setProperty('display', 'inline-block', 'important');
+		
+		splitBtn.removeEventListener('mouseenter', clearRevertTimer);
+		splitBtn.removeEventListener('mouseleave', startRevertTimer);
+		var links = splitBtn.querySelectorAll('.split-btn-part');
+		links.forEach(function(link) {
+			link.removeEventListener('click', handleLinkClick);
+		});
+	}
+
+	function handleLinkClick() {
+		setTimeout(revertToOriginal, 1000);
+	}
+
+	startRevertTimer();
+
+	splitBtn.addEventListener('mouseenter', clearRevertTimer);
+	splitBtn.addEventListener('mouseleave', startRevertTimer);
+
+	var links = splitBtn.querySelectorAll('.split-btn-part');
+	links.forEach(function(link) {
+		link.addEventListener('click', handleLinkClick);
+	});
+};
 
