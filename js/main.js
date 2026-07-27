@@ -22,6 +22,7 @@ jQuery(function($) {
 	contactForm();
 	stickyFillPlugin();
 	animateReveal();
+	linksTreeAnimation();
 
 });
 
@@ -832,4 +833,138 @@ function showToast(message) {
 		toast.classList.remove('show');
 	}, 3000);
 }
+
+// Links Tree — grows into view once, then sways/breathes ambiently
+var linksTreeAnimation = function() {
+	var stage = document.getElementById('linksTreeStage');
+	if (!stage) return;
+
+	var svg = document.getElementById('linksTreeSvg');
+	var particlesWrap = document.getElementById('linksTreeParticles');
+	var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	var ROOT_DURATION = 1.3;
+	var TRUNK_DELAY = 0.5;
+	var TRUNK_DURATION = 1.6;
+	var BRANCH_TIER_DELAY = { a: 1.9, b: 2.05, c: 2.2, d: 2.35, e: 2.5 };
+	var BRANCH_DURATION = 0.8;
+	var LEAF_START = 2.8;
+	var LEAF_STEP = 0.045;
+	var FRUIT_TIER_DELAY = { a: 4.0, b: 4.2, c: 4.4, d: 4.6, e: 4.8 };
+	var FRUIT_TIER_STEP = 0.15;
+	var GROWTH_TOTAL_MS = 6900;
+
+	if (svg && !reduceMotion) {
+		var roots = svg.querySelectorAll('.tree-root');
+		roots.forEach(function(path, i) {
+			var len = path.getTotalLength();
+			path.style.strokeDasharray = len;
+			path.style.strokeDashoffset = len;
+			path.style.transition = 'stroke-dashoffset ' + ROOT_DURATION + 's ease-out ' + ((i % 5) * 0.04) + 's';
+		});
+
+		var trunk = svg.querySelector('.tree-trunk');
+		if (trunk) {
+			var trunkLen = trunk.getTotalLength();
+			trunk.style.strokeDasharray = trunkLen;
+			trunk.style.strokeDashoffset = trunkLen;
+			trunk.style.transition = 'stroke-dashoffset ' + TRUNK_DURATION + 's ease-out ' + TRUNK_DELAY + 's';
+		}
+
+		var tierCounts = {};
+		var branches = svg.querySelectorAll('.tree-branch');
+		branches.forEach(function(path) {
+			var tier = path.dataset.tier;
+			var idx = tierCounts[tier] || 0;
+			tierCounts[tier] = idx + 1;
+			var len = path.getTotalLength();
+			path.style.strokeDasharray = len;
+			path.style.strokeDashoffset = len;
+			var delay = (BRANCH_TIER_DELAY[tier] || 2.0) + idx * 0.1;
+			path.style.transition = 'stroke-dashoffset ' + BRANCH_DURATION + 's ease-out ' + delay + 's, stroke 0.4s ease';
+		});
+
+		var leaves = svg.querySelectorAll('.tree-leaf');
+		leaves.forEach(function(leaf, i) {
+			leaf.style.transitionDelay = (LEAF_START + i * LEAF_STEP) + 's';
+			leaf.style.animationDelay = (Math.random() * 3.6) + 's';
+		});
+
+		var fruitTierCounts = {};
+		var fruits = stage.querySelectorAll('.tree-fruit');
+		fruits.forEach(function(fruit) {
+			var tier = fruit.dataset.tier;
+			var idx = fruitTierCounts[tier] || 0;
+			fruitTierCounts[tier] = idx + 1;
+			var delay = (FRUIT_TIER_DELAY[tier] || 4.0) + idx * FRUIT_TIER_STEP;
+			fruit.style.transitionDelay = delay + 's';
+		});
+	} else if (svg) {
+		// Reduced motion: show the fully grown tree immediately, no draw/stagger.
+		svg.querySelectorAll('.tree-path').forEach(function(path) {
+			path.style.transition = 'none';
+		});
+		stage.querySelectorAll('.tree-fruit, .tree-leaf, .tree-star').forEach(function(el) {
+			el.style.transition = 'none';
+			el.style.transitionDelay = '0s';
+		});
+	}
+
+	if (particlesWrap) {
+		var PARTICLE_COUNT = 14;
+		for (var p = 0; p < PARTICLE_COUNT; p++) {
+			var dot = document.createElement('span');
+			dot.className = 'tree-particle';
+			dot.style.left = (15 + Math.random() * 70) + '%';
+			dot.style.animationDuration = (6 + Math.random() * 5) + 's';
+			dot.style.animationDelay = (Math.random() * 8) + 's';
+			particlesWrap.appendChild(dot);
+		}
+	}
+
+	fruits = stage.querySelectorAll('.tree-fruit');
+	fruits.forEach(function(fruit) {
+		var branchEl = svg ? svg.getElementById('branch-' + fruit.dataset.branch) : null;
+		if (!branchEl) return;
+		var activate = function() { branchEl.classList.add('branch-active'); };
+		var deactivate = function() { branchEl.classList.remove('branch-active'); };
+		fruit.addEventListener('mouseenter', activate);
+		fruit.addEventListener('mouseleave', deactivate);
+		fruit.addEventListener('focus', activate);
+		fruit.addEventListener('blur', deactivate);
+	});
+
+	var reveal = function() {
+		if (svg && !reduceMotion) {
+			svg.querySelectorAll('.tree-path').forEach(function(path) {
+				// Force a reflow so the transition-delay set above actually applies
+				// before flipping the end state, instead of collapsing into it.
+				path.getBoundingClientRect();
+				path.style.strokeDashoffset = '0';
+			});
+		}
+		stage.classList.add('in-view');
+		if (reduceMotion) {
+			stage.classList.add('grown');
+		} else {
+			setTimeout(function() {
+				stage.classList.add('grown');
+			}, GROWTH_TOTAL_MS);
+		}
+	};
+
+	if ('IntersectionObserver' in window) {
+		var observer = new IntersectionObserver(function(entries) {
+			entries.forEach(function(entry) {
+				if (entry.isIntersecting) {
+					reveal();
+					observer.unobserve(stage);
+				}
+			});
+		}, { threshold: 0.3 });
+		observer.observe(stage);
+	} else {
+		reveal();
+	}
+};
 
