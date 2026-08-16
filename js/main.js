@@ -29,7 +29,8 @@ jQuery(function($) {
 var siteIstotope = function() {
 	var $container = $('#posts').isotope({
     itemSelector : '.item',
-    isFitWidth: true
+    layoutMode: 'fitRows',
+    percentPosition: true
   });
 
   $(window).resize(function(){
@@ -63,30 +64,20 @@ var siteIstotope = function() {
   	var revealImg = $('.gsap-reveal-img');
 
   	if ( revealImg.length ) {
-  		var i = 0;
-			revealImg.each(function() {
+			revealImg.each(function(i) {
 
 				var cover = $(this).find('.cover'),
 					revealContent = $(this).find('.reveal-content'),
 					img = $(this).find('.reveal-content img');
 
+				var tl2 = new TimelineMax({ paused: true });
 
-				var tl2 = new TimelineMax();
-
-
-				setTimeout(function() {
-
-					tl2
-						tl2.set(img, {  scale: '2.0', autoAlpha: 1, })
-						.to(cover, 1, { marginLeft: '0', ease:Expo.easeInOut, onComplete() {
-							tl2.set(revealContent, { autoAlpha: 1 });
-							tl2.to(cover, 1, { marginLeft: '102%', ease:Expo.easeInOut });
-							tl2.to(img, 2, { scale: '1.0', ease:Expo.easeOut }, '-=1.5');
-						} } )
-
-				}, i * 700);
-
-				
+				tl2.set(img, {  scale: '2.0', autoAlpha: 1, })
+					.to(cover, 1, { marginLeft: '0', ease:Expo.easeInOut, onComplete() {
+						tl2.set(revealContent, { autoAlpha: 1 });
+						tl2.to(cover, 1, { marginLeft: '102%', ease:Expo.easeInOut });
+						tl2.to(img, 2, { scale: '1.0', ease:Expo.easeOut }, '-=1.5');
+					} } );
 
 				var scene = new ScrollMagic.Scene({
 					triggerElement: this,
@@ -94,10 +85,11 @@ var siteIstotope = function() {
 					reverse: false,
 					offset: "-300%",
 				})
-				.setTween(tl2)
+				.on('enter', function() {
+					var stagger = (i % 3) * 150;
+					setTimeout(function() { tl2.play(); }, stagger);
+				})
 				.addTo(controller);
-
-				i++;
 
 			});
 		}
